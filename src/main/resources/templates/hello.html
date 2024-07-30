@@ -5,9 +5,21 @@
     <title>Hello World!</title>
 </head>
 <body>
+<div sec:authorize="isAuthenticated()">
+    <p th:text="|User: ${#authentication.getName()} are logged in|"></p>
+</div>
 <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+<p th:text="|Name: ${#authentication.getName()}|"></p>
+<p th:text="|Role: ${#authentication.authorities}|"></p>
+<p sec:authorize="hasRole('ROLE_USER')">
+    Role: USER
+</p>
+<p sec:authorize="hasRole('ROLE_ADMIN')">
+    Role: ADMIN
+</p>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+
 </body>
 </html>
